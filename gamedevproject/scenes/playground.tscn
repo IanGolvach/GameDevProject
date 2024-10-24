@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjqwl0ybi7b5v"]
+
+[ext_resource type="PackedScene" uid="uid://c7d21d3t3mohv" path="res://scenes/player.tscn" id="1_m2v8f"]
+[ext_resource type="Script" path="res://scripts/camera_controller.gd" id="2_ebsbc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_litjn"]
+sky_top_color = Color(0.412152, 0.412152, 0.412152, 1)
+sky_horizon_color = Color(0.603038, 0.603038, 0.603038, 1)
+sky_energy_multiplier = 0.5
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.603038, 0.603038, 0.603038, 1)
+
+[sub_resource type="Sky" id="Sky_i54d0"]
+sky_material = SubResource("ProceduralSkyMaterial_litjn")
+
+[sub_resource type="Environment" id="Environment_6qn7y"]
+background_mode = 2
+sky = SubResource("Sky_i54d0")
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_np6hb"]
+albedo_color = Color(0.473976, 0.473976, 0.473976, 1)
+rim = 0.85
+rim_tint = 0.65
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0wldn"]
+material = SubResource("StandardMaterial3D_np6hb")
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqpig"]
+albedo_color = Color(0.347817, 0.347817, 0.347817, 1)
+rim_enabled = true
+rim = 0.3
+
+[node name="Playground" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6qn7y")
+
+[node name="player" parent="." instance=ExtResource("1_m2v8f")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.70937, 0.392445)
+light_size = 0.024
+shadow_enabled = true
+shadow_blur = 0.0
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+layers = 3
+use_collision = true
+mesh = SubResource("PlaneMesh_0wldn")
+
+[node name="cam_gimbal" type="Node3D" parent="."]
+script = ExtResource("2_ebsbc")
+
+[node name="Camera3D" type="Camera3D" parent="cam_gimbal"]
+transform = Transform3D(1, 0, 0, 0, 0.985046, 0.17229, 0, -0.17229, 0.985046, 0, 1.89688, 1.80328)
+
+[node name="Boxes" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39534, 3.87736)
+use_collision = true
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_fqpig")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.845283, 0.971336, 3.57187)
+use_collision = true
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_fqpig")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64024, 1.49234, 3.12677)
+use_collision = true
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_fqpig")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7274, 0.90848, 1.60083)
+use_collision = true
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_fqpig")
